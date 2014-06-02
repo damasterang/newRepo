@@ -4,7 +4,7 @@
 		<title>form</title>
 	</head>
 	<body>
-		<form action="jst.php" method="post">
+		<form action="contoh.php" method="post">
 			
 			uan <input type="text" name="uan"><br>
 			test <input type="text" name="test"><br>

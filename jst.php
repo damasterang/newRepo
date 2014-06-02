@@ -1,7 +1,7 @@
 <?php
 
-	$numEpoh = 1000;
-	$LR = 0.5;
+	$numEpoh = 50;
+	$LR = 0.6;
 	$numHL = 2;
 
 	$ruan = array( 8.75, 9.13, 9.00, 9.25, 8.25, 8.13, 9.00, 8.88, 8.50, 8.25  );
@@ -47,6 +47,7 @@
 
 		global $numEpoh;
 		global $mseOut;
+		global $HLOut;
 
 		normalisasi();
 
@@ -54,19 +55,20 @@
 			
 			$x2 = $x+1;
 
-			echo "<strong>epoh " . $x2."</strong> ";
+			// echo "<strong>epoh " . $x2."</strong> ";
 
-			hiddenLayer();
+			perhitungan();
 			
-			echo "mseOut ".$mseOut[0]." ";
-			echo "mseOut ".$mseOut[1]."</br>";
-
+			// echo "<strong>mseOut</strong> ".$mseOut[0]." ";
+			// echo "<strong>y</strong> ".$HLOut[0][4]." ";
+			// echo "<strong>mseOut</strong> ".$mseOut[1]." ";
+			// echo "<strong>y</strong> ".$HLOut[1][4]."</br>";
 		}
 
 	}
 
 	////////////	/////////
-	// fungsi normalisasi //
+	// fungsi normalisasi 
 	///////////		/////////
 
 	function normalisasi(){
@@ -87,8 +89,8 @@
 			$ruanNorm[$x] = ($ruan[$x]-$minR)/($maxR-$minR); //rumus normalisasi rata2 uan
 			$testNorm[$x] = ($test[$x]-$minT)/($maxT-$minT);
 
-			// echo $ruanNorm[$x]."</br>";
-			// echo $testNorm[$x]."</br>";
+			echo $ruanNorm[$x]."</br>";
+			echo $testNorm[$x]."</br>";
 			
 			if ($target[$x] == "IPA") {
 				$targetNorm[$x][0] = 1;
@@ -102,22 +104,22 @@
 			// tampilkan normalisasi
 			////////////////////////
 			
-			// for ($i=0; $i < 2; $i++) {   
-			// 	echo $targetNorm[$x][$i];
-			// 	if ($i == 1) {
-			// 		echo "</br>";
-			// 	}				
-			// }
+			for ($i=0; $i < 2; $i++) {   
+				echo $targetNorm[$x][$i];
+				if ($i == 1) {
+					echo "</br></br>";
+				}				
+			}
 
 		}
 
 	}
 
 	///////////		/////////////
-	// fungsi pada hidden layer
+	// fungsi pada perhitungan
 	///////////		/////////////
 
-	function hiddenLayer(){
+	function perhitungan(){
 
 		global $LR;
 		global $HLIn;
@@ -176,10 +178,8 @@
 
 					$HLIn[$x][4] = 1/(1+exp(-$HLIn[$x][3]));
 
-
 					// echo $HLIn[$x][3]."</br>";
 					// echo $HLIn[$x][4]."</br>";
-
 
 				}
 
@@ -298,6 +298,10 @@
 		}
 	}
 
+	///////////		/////////////
+	// fungsi normalisasi data
+	///////////		/////////////
+
 	function normalisasiData(){
 
 		global $uanData;
@@ -318,17 +322,16 @@
 
 	}
 
+	///////		///
+	// fungsi test
+	///////		///
+
 	function test(){
 
 		global $LR;
 		global $HLIn;
 		global $HLOut;
 		global $numHL;
-		global $initHL;
-
-		global $ruanNorm;
-		global $testNorm;
-		global $targetNorm;
 
 		global $mseOut;
 		global $mseIn;
@@ -366,13 +369,13 @@
 			
 			$HLOut[$x][4] = 1/(1+exp(-$HLOut[$x][3])); // y
 
-			echo "real target".$HLOut[$x][4]."</br>";
+			echo "real target ".$HLOut[$x][4]."</br>";
 
-			$targetTest[$x] = ($mseOut[$x]/($HLOut[$x][4]*(1-$HLOut[$x][4])))+$HLOut[$x][4];
+			// $targetTest[$x] = ($mseOut[$x]/($HLOut[$x][4]*(1-$HLOut[$x][4])))+$HLOut[$x][4];
 
-			echo $mseOut[$x]."</br>";
+			// echo $mseOut[$x]."</br>";
 
-			echo "target ".$targetTest[$x]."</br>";
+			// echo "target ".$targetTest[$x]."</br>";
 
 			// $mseOut[$x] = ($targetNorm[$person][$x]-$HLOut[$x][4])*((1/(1+exp(-$HLOut[$x][3])))*(1-1/(1+exp(-$HLOut[$x][3]))));
 
